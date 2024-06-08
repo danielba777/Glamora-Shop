@@ -1,7 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Header = () => {
+
+  const { cartItems } = useSelector((state) => state.cart)
+
   return (
     <header className='flex flex-col'>
       
@@ -11,20 +15,40 @@ const Header = () => {
             <h1 className='text-xl hover:text-zinc-600 cursor-pointer logo'>Glamora</h1>
           </Link>
         </div>
-        <div className='flex gap-6'>
+        <div className='flex gap-2 sm:gap-4'>
           <Link to='/wishlist'>
             <button className='text-xl hover:text-zinc-600 cursor-pointer'>
-              <i className='fa-solid fa-heart'></i>
+              <div className='relative h-[30px] w-[30px]'>
+                <i className='fa-solid fa-heart'></i>
+              </div>
             </button>
           </Link>
           <Link to='/login'>
             <button className='text-xl hover:text-zinc-600 cursor-pointer'>
-              <i className='fa-solid fa-user'></i>
+              <div className='relative h-[30px] w-[30px]'>
+                <i className='fa-solid fa-user'></i>
+              </div>
             </button>
           </Link>
           <Link to='/cart'>
             <button className='text-xl hover:text-zinc-600 cursor-pointer'>
-              <i className='fa-solid fa-cart-shopping'></i>
+              <div className='flex items-center gap-1'>
+                <div className='relative h-[30px] w-[30px]'>
+                  <i className='fa-solid fa-cart-shopping'></i>
+                  { 
+                    cartItems.length > 0 && (
+                      <div className='rounded-lg bg-red-500 h-[10px] w-[10px] absolute top-0 right-0' />
+                    )
+                  }
+                </div>
+                {
+                  cartItems.length > 0 && (
+                    <div>
+                      { cartItems.reduce((acc, item) => acc + item.qty, 0)}
+                    </div>
+                  )
+                }
+              </div>
             </button>
           </Link>
         </div>

@@ -1,7 +1,7 @@
 const products = [
     {
       imageId: 15970,
-      price: "29.99",
+      price: 29.99,
       gender: "Men",
       masterCategory: "Apparel",
       subCategory: "Topwear",
@@ -14,7 +14,7 @@ const products = [
     },
     {
       imageId: 39386,
-      price: "59.99",
+      price: 59.99,
       gender: "Men",
       masterCategory: "Apparel",
       subCategory: "Bottomwear",
@@ -27,7 +27,7 @@ const products = [
     },
     {
       imageId: 59263,
-      price: "129.99",
+      price: 129.99,
       gender: "Women",
       masterCategory: "Accessories",
       subCategory: "Watches",
@@ -40,7 +40,7 @@ const products = [
     },
     {
       imageId: 21379,
-      price: "39.99",
+      price: 39.99,
       gender: "Men",
       masterCategory: "Apparel",
       subCategory: "Bottomwear",
@@ -53,7 +53,7 @@ const products = [
     },
     {
       imageId: 53759,
-      price: "19.99",
+      price: 19.99,
       gender: "Men",
       masterCategory: "Apparel",
       subCategory: "Topwear",
@@ -66,7 +66,7 @@ const products = [
     },
     {
       imageId: 1855,
-      price: "19.99",
+      price: 19.99,
       gender: "Men",
       masterCategory: "Apparel",
       subCategory: "Topwear",
@@ -79,7 +79,7 @@ const products = [
     },
     {
       imageId: 30805,
-      price: "14.99",
+      price: 14.99,
       gender: "Men",
       masterCategory: "Apparel",
       subCategory: "Topwear",
@@ -92,7 +92,7 @@ const products = [
     },
     {
       imageId: 26960,
-      price: "29.99",
+      price: 29.99,
       gender: "Women",
       masterCategory: "Apparel",
       subCategory: "Topwear",
@@ -105,7 +105,7 @@ const products = [
     },
     {
       imageId: 29114,
-      price: "9.99",
+      price: 9.99,
       gender: "Men",
       masterCategory: "Accessories",
       subCategory: "Socks",
