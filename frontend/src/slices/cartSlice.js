@@ -23,23 +23,31 @@ const cartSlice = createSlice({
             return updateCart(state)
         },
         adjustQty: (state, action) => {
-            const { id, operator } = action.payload;
+            const { id, operator } = action.payload
       
-            const existItem = state.cartItems.find((x) => x._id === id);
+            const existItem = state.cartItems.find((x) => x._id === id)
       
             if (existItem) {
               state.cartItems = state.cartItems.map((x) =>
                 x._id === existItem._id
                   ? { ...x, qty: operator === '++' ? x.qty + 1 : x.qty - 1 }
                   : x
-              ).filter(item => item.qty > 0);
+              ).filter(item => item.qty > 0)
             }
       
-            return updateCart(state);
+            return updateCart(state)
         },
+        removeFromCart: (state, action) => {
+
+            const { id } = action.payload
+
+            state.cartItems = state.cartItems.filter((x) => x._id !== id)
+
+            return updateCart(state)
+        }
     },
 })
 
-export const { addToCart, adjustQty } = cartSlice.actions
+export const { addToCart, adjustQty, removeFromCart } = cartSlice.actions
 
 export default cartSlice.reducer
