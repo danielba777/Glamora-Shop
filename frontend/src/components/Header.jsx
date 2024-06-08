@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 const Header = () => {
 
   const { cartItems } = useSelector((state) => state.cart)
+  const { userInfo } = useSelector((state) => state.auth)
 
   return (
     <header className='flex flex-col'>
@@ -23,13 +24,23 @@ const Header = () => {
               </div>
             </button>
           </Link>
-          <Link to='/login'>
-            <button className='text-xl hover:text-zinc-600 cursor-pointer'>
-              <div className='relative h-[30px] w-[30px]'>
-                <i className='fa-solid fa-user'></i>
-              </div>
-            </button>
-          </Link>
+          { userInfo ? (
+            <Link to='/profile'>
+              <button className='text-xl hover:text-zinc-600 cursor-pointer'>
+                <div className='relative h-[30px] w-[30px]'>
+                  <i className='fa-solid fa-user'></i>
+                </div>
+              </button>
+            </Link>
+          ) : (
+            <Link to='/login'>
+              <button className='text-xl hover:text-zinc-600 cursor-pointer'>
+                <div className='relative h-[30px] w-[30px]'>
+                  <i className='fa-solid fa-user'></i>
+                </div>
+              </button>
+            </Link>
+          ) }
           <Link to='/cart'>
             <button className='text-xl hover:text-zinc-600 cursor-pointer'>
               <div className='flex items-center gap-1'>

@@ -20,6 +20,10 @@ const CartScreen = () => {
         dispatch(removeFromCart({ id }))
     }
 
+    const checkoutHandler = () => {
+        navigate('/login?redirect=/shipping');
+    }
+
   return (
     <>
         { cartItems.length === 0 ? (
@@ -42,7 +46,7 @@ const CartScreen = () => {
                         </div>
                     </div>
                     { cartItems.map((item) => (
-                        <div className='flex mb-6 p-2'>
+                        <div className='flex mb-6 p-2' key={item._id}>
                             <img src={`${process.env.PUBLIC_URL}/images/${item?.imageId}.jpg`} alt={item?.productDisplayName} className='h-[150px]'/>
                             <div className='flex flex-col justify-start flex-1 justify-between'>
                                 <div className='flex flex-col'>
@@ -88,7 +92,7 @@ const CartScreen = () => {
                         <h2 className='text-xl font-bold'>Total</h2>
                         <h2 className='text-xl font-semibold logo'>{cart.totalPrice}€</h2>
                     </div>
-                    <button className='flex-1 bg-zinc-950 rounded-md text-white p-2 duration-300 hover:-translate-y-[2px] hover:shadow-md'>Proceed To Checkout</button>
+                    <button className='flex-1 bg-zinc-950 rounded-md text-white p-2 duration-300 hover:-translate-y-[2px] hover:shadow-md' disabled={cartItems.length == 0} onClick={checkoutHandler}>Proceed To Checkout</button>
                 </div>
             </div>
             </>
