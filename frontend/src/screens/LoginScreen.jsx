@@ -43,7 +43,7 @@ const LoginScreen = () => {
     <>
         <div className='flex flex-col gap-4'>
             <Link className='p-2' to='/'><i className='fa-solid fa-chevron-left'></i></Link>
-        <div />
+            <div />
         </div>
         <div className='flex flex-col gap-8'>
             <div className='flex justify-center gap-4'>

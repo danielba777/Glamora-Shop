@@ -44,22 +44,7 @@ const PaymentScreen = () => {
         <div className='flex w-full'>
             <div className='flex flex-col w-full sm:w-1/2'>
                 <h1 className='text-xl font-semibold my-4'>Payment Information</h1>
-                <div className='flex flex-col border border-2 border-slate-900 rounded-md sm:w-2/3 p-2'>
-                    <div className='flex justify-between'>
-                        <p className='text-sm text-slate-500'>Shipping Address</p>
-                        <Link to='/shipping'>
-                            <button className='text-sm text-blue-500 hover:text-blue-700'>Edit</button>
-                        </Link>
-                    </div>
-                    <div className='flex-col'>
-                        <p>{userInfo.name}</p>
-                        <p>{shippingAddress.address}</p>
-                        <p>{shippingAddress.postalCode} {shippingAddress.city}</p>
-                        <p>{shippingAddress.country}</p>
-                    </div>
-                </div>
                 <form className='flex flex-col mt-6 sm:w-2/3' onSubmit={submitHandler}>
-                    <h1 className='text-xl font-semibold my-4'>Payment Method</h1>
                     <div className='border border-2 border-slate-900 rounded-md p-2'>
                         <label className='flex gap-2 cursor-pointer'>
                                 <input type='radio' value='PayPal' checked={paymentMethod === 'PayPal'} onSelect={() => setPaymentMethod('PayPal')} />
