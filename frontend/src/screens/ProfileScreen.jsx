@@ -62,57 +62,57 @@ const ProfileScreen = () => {
         <Link className='p-2' to='/'><i className='fa-solid fa-chevron-left'></i></Link>
         <div />
       </div>
-      <div className='flex w-full'>
-        <div className='flex flex-col gap-2 w-1/5'>
-          <button className='p-2 rounded-md w-32 w-full sm:w-[220px] sm:h-[50px] sm:border sm:border-2 sm:border-slate-300'>
-            <div className='flex items-center'>
-              <div className='flex justify-center items-center w-[50px] text-xl sm:text-base'>
+      <div className='flex flex-col sm:flex-row w-full'>
+        <div className='flex sm:flex-col gap-2 overflow-x-auto sm:w-1/5'>
+          <button className='p-2 sm:rounded-md w-max sm:w-[220px] sm:h-[50px] sm:border sm:border-2 sm:border-slate-300 border-b-2 border-slate-400'>
+            <div className='flex items-center gap-2'>
+              <div className='flex justify-center items-center w-max sm:w-[50px] text-xl sm:text-base'>
                 <i className='fa-solid fa-lock'></i>
               </div>
-              <div className='flex items-center justify-start text-xl sm:text-base'>
+              <div className='flex items-center justify-start text-xl sm:text-base w-max'>
                 <p>Profile & Security</p>
               </div>
             </div>
           </button>
           <Link to='/myorders'>
             <button className='p-2 rounded-md w-32 hover:border-slate-400 w-full sm:w-[220px] sm:h-[50px] sm:border sm:border-2 sm:border-slate-600'>
-              <div className='flex items-center'>
-                <div className='flex justify-center items-center w-[50px] text-xl sm:text-base'>
+              <div className='flex items-center gap-2'>
+                <div className='flex justify-center items-center sm:w-[50px] text-xl sm:text-base w-max'>
                   <i className='fa-solid fa-cart-flatbed'></i>
                 </div>
-                <div className='flex items-center justify-start text-xl sm:text-base'>
-                  <p>Your orders</p>
+                <div className='flex items-center justify-start text-xl sm:text-base w-max'>
+                  <p>My orders</p>
                 </div>
               </div>
             </button>
           </Link>
           <button className='p-2 rounded-md w-32 hover:border-slate-400 w-full sm:w-[220px] sm:h-[50px] sm:border sm:border-2 sm:border-slate-600'>
-            <div className='flex items-center'>
-              <div className='flex justify-center items-center w-[50px] text-xl sm:text-base'>
+            <div className='flex items-center gap-2'>
+              <div className='flex justify-center items-center sm:w-[50px] text-xl sm:text-base w-max'>
                 <i className='fa-solid fa-gear'></i>
               </div>
-              <div className='flex items-center justify-start text-xl sm:text-base'>
+              <div className='flex items-center justify-start text-xl sm:text-base w-max'>
                 <p>Settings</p>
               </div>
             </div>
           </button>
           <button className='p-2 rounded-md w-32 hover:border-slate-400 w-full sm:w-[220px] sm:h-[50px] sm:border sm:border-2 sm:border-slate-600'>
-            <div className='flex items-center'>
-              <div className='flex justify-center items-center w-[50px] text-xl sm:text-base'>
+            <div className='flex items-center gap-2'>
+              <div className='flex justify-center items-center sm:w-[50px] text-xl sm:text-base w-max'>
                 <i className='fa-solid fa-comments'></i>
               </div>
-              <div className='flex items-center justify-start text-xl sm:text-base'>
+              <div className='flex items-center justify-start text-xl sm:text-base w-max'>
                 <p>Help</p>
               </div>
             </div>
           </button>
-          <div className='flex items-center justify-center mt-4 sm:justify-start'>
+          <div className='hidden sm:flex items-center justify-center mt-4 sm:justify-start'>
             <button className='border border-2 border-slate-600 px-2 py-1 rounded-md w-32 hover:border-slate-400 min-w-[220px]' onClick={logoutHandler}>Logout</button>
           </div>
         </div>
-        <div className='flex flex-col justify-center w-4/5 gap-2'>
+        <div className='flex flex-col justify-center sm:w-4/5 gap-2'>
           <h2 className='text-xl font-semibold my-4'>Profile & Security</h2>
-          <div className='flex flex-col w-1/2 border rounded-md shadow-md p-2'>
+          <div className='flex flex-col sm:w-1/2 border rounded-md shadow-md p-2'>
             <form onSubmit={submitHandler} className='flex flex-col gap-4 p-4'>
               <div className='flex flex-col w-full'>
                 <label htmlFor='name' className='text-left pl-1'>Name</label>
@@ -160,6 +160,7 @@ const ProfileScreen = () => {
             </form>
           </div>
           { loadingUpdateProfile && <Loader /> }
+          <div className='h-32 sm:h-64' />
         </div>
       </div>
     </>

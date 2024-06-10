@@ -25,14 +25,31 @@ const Header = () => {
             </button>
           </Link>
           { userInfo ? (
-            <Link to='/profile'>
-              <button className='text-xl hover:text-zinc-600 cursor-pointer'>
-                <div className='relative h-[30px] w-[30px]'>
-                  <i className='fa-solid fa-user'></i>
-                </div>
-              </button>
-            </Link>
+            
+            userInfo.isAdmin ? (
+
+              <Link to='/admin/orderlist'>
+                <button className='text-xl hover:text-zinc-600 cursor-pointer'>
+                  <div className='relative h-[30px] w-[30px]'>
+                    <i className='fa-solid fa-user'></i>
+                  </div>
+                </button>
+              </Link>
+
+            ) : (
+
+              <Link to='/profile'>
+                <button className='text-xl hover:text-zinc-600 cursor-pointer'>
+                  <div className='relative h-[30px] w-[30px]'>
+                    <i className='fa-solid fa-user'></i>
+                  </div>
+                </button>
+              </Link>
+
+            ) 
+
           ) : (
+
             <Link to='/login'>
               <button className='text-xl hover:text-zinc-600 cursor-pointer'>
                 <div className='relative h-[30px] w-[30px]'>
@@ -40,6 +57,7 @@ const Header = () => {
                 </div>
               </button>
             </Link>
+
           ) }
           <Link to='/cart'>
             <button className='text-xl hover:text-zinc-600 cursor-pointer'>
