@@ -4,9 +4,27 @@ import Product from '../models/productModel.js'
 // @desc    Fetch all products
 // @route   GET /api/products
 // @access  Public
-const getProducts = asyncHandler( async (req, res) => {
-    const products = await Product.find({})
-    res.json(products)
+const getProducts = asyncHandler(async (req, res) => {
+
+    const pageSize = 6
+    
+    const page = Number(req.query.pageNumber) || 1
+  
+    const keyword = req.query.keyword
+      ? {
+          productDisplayName: {
+            $regex: req.query.keyword,
+            $options: 'i',
+          },
+        }
+      : {}
+  
+    const count = await Product.countDocuments({ ...keyword })
+    const products = await Product.find({ ...keyword })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+  
+    res.json({ products, page, pages: Math.ceil(count / pageSize) })
 })
 
 // @desc    Fetch a product
@@ -29,7 +47,8 @@ const createProduct = asyncHandler( async (req, res) => {
 
     const product = new Product({
         user: req.user._id,
-        imageId: 15970,
+        imageId: 123,
+        image: 'No image',
         price: 0,
         gender: 'Sample Gender',
         masterCategory: 'Sample Master Category',
@@ -50,7 +69,8 @@ const createProduct = asyncHandler( async (req, res) => {
 // @route   PUT /api/products/:id
 // @access  Private / Admin
 const updateProduct = asyncHandler( async (req, res) => {
-    const { imageId, 
+    const { imageId,
+            image,
             price, 
             gender,
             masterCategory, 
@@ -68,6 +88,7 @@ const updateProduct = asyncHandler( async (req, res) => {
     if (product) {
 
         product.imageId = imageId
+        product.image = image
         product.price = price
         product.gender = gender
         product.masterCategory = masterCategory
@@ -88,4 +109,27 @@ const updateProduct = asyncHandler( async (req, res) => {
     }
 })
 
-export { getProducts, getProductById, createProduct, updateProduct }
+// @desc    Delete a product
+// @route   DELETE /api/products/:id
+// @access  Private / Admin
+const deleteProduct = asyncHandler( async (req, res) => {
+
+    const product = await Product.findById(req.params.id)
+
+    if (product) {
+        await Product.deleteOne({ _id: product._id })
+        res.status(200).json({ message: 'Product deleted '})
+        
+    } else {
+        res.status(404)
+        throw new Error('Resource not found')
+    }
+})
+
+export { 
+    getProducts, 
+    getProductById, 
+    createProduct, 
+    updateProduct, 
+    deleteProduct 
+}

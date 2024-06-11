@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import SearchBox from './SearchBox'
 
 const Header = () => {
 
@@ -9,7 +10,6 @@ const Header = () => {
 
   return (
     <header className='flex flex-col'>
-      
       <div className='flex justify-between items-center p-4 text-zinc-950'>
         <div>
           <Link to='/'>
@@ -99,6 +99,29 @@ const Header = () => {
         </button>
         <button></button>
       </div>
+
+      <div className='flex justify-center sm:justify-between items-center sm:border-b-2 px-2 py-1 border-t-2 sm:border-t-0'>
+        <div className='flex gap-2 font-semibold text-lg'>
+          <Link>
+            <button className='flex justify-center items-center w-[100px] h-[50px]'>
+              <h2>Women</h2>
+            </button>
+          </Link>
+          <Link>
+            <button className='flex justify-center items-center w-[100px] h-[50px]'>
+              <h2>Men</h2>
+            </button>
+          </Link>
+          <Link>
+            <button className='flex justify-center items-center w-[100px] h-[50px]'>
+              <h2>Kids</h2>
+            </button>
+          </Link>  
+        </div>
+        <div className='hidden sm:flex sm:items-center sm:justify-center'>
+          <SearchBox  />
+        </div>
+      </div>
       
       <div className='block sm:hidden relative h-9 overflow-hidden bg-zinc-950 text-white'>
         <div className='absolute inset-0'>
@@ -116,7 +139,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-
     </header>
   )
 }

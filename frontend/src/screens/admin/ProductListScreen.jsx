@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useLogoutMutation } from '../../slices/usersApiSlice'
-import { useGetProductsQuery, useCreateProductMutation } from '../../slices/productsApiSlice'
+import { useGetProductsQuery, useCreateProductMutation, useDeleteProductMutation } from '../../slices/productsApiSlice'
 import { logout } from '../../slices/authSlice'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
@@ -15,6 +15,7 @@ const ProductListScreen = () => {
   const [logoutApiCall] = useLogoutMutation()
   const { data: products, isLoading, error, refetch } = useGetProductsQuery()
   const [createProduct,{ isLoading: loadingCreate }] = useCreateProductMutation()
+  const [deleteProduct,{ isLoading: loadingDelete }] = useDeleteProductMutation()
 
   console.log('Orders Data: ', products)
 
@@ -39,12 +40,15 @@ const ProductListScreen = () => {
     }
   }
 
-  const editHandler = (id) => {
-
-  }
-
-  const deleteHandler = (id) => {
-
+  const deleteHandler = async (id) => {
+    if(window.confirm('Are you sure you want to delete this product?')) {
+      try {
+        await deleteProduct(id)
+        refetch()
+      } catch (err) {
+        console.log(err?.data?.message || err.error)
+      }
+    }
   }
   
   return (
@@ -100,7 +104,7 @@ const ProductListScreen = () => {
         <div className='flex flex-col justify-center sm:w-4/5 gap-2'>
         <div className='flex justify-between items-center'>
             <h2 className='text-xl font-semibold my-4'>All Products</h2>
-            <button className='flex items-center gap-1 rounded-md w-max h-max p-1 border border-2 border-slate-600 hover:border-slate-400 hover:text-slate-400'
+            <button className='flex items-center gap-1 rounded-md w-max h-max py-1 px-2 border border-2 border-slate-600 hover:border-slate-400 hover:text-slate-400'
                     onClick={createProductHandler}>
                 <i className='fa-regular fa-square-plus'></i> 
                 <p>Create Product</p>
@@ -109,38 +113,38 @@ const ProductListScreen = () => {
           
           { isLoading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
             <div className='overflow-x-auto'>
-            <table className='text-center w-full'>
-              <thead>
-                <tr className='border-b-4'>
-                  <th>ID</th>
-                  <th>NAME</th>
-                  <th>PRICE</th>
-                  <th>CATEGORY</th>
-                  <th>SUBCATEGORY</th>
-                  <th>SEASON</th>
-                  <th>USAGE</th>
-                </tr>
-              </thead>
-              <tbody>
-                { products.map((product) =>(
-                  <tr key={product._id} className='border-b-2 hover:bg-slate-200 cursor-pointer'>
-                    <td>{product._id}</td>
-                    <td>{product.productDisplayName}</td>
-                    <td>{product.price}€</td>
-                    <td>{product.masterCategory}</td>
-                    <td>{product.subCategory}</td>
-                    <td>{product.season}</td>
-                    <td>{product.usage}</td>
-                    <td className='hover:text-slate-400'>
-                      <Link to={`/admin/product/${product._id}/edit`}>
-                        <i className='fa-regular fa-pen-to-square p-2'></i>
-                      </Link>
-                    </td>
-                    <td className='hover:text-slate-400' onClick={deleteHandler}><i className='fa-regular fa-trash-can p-2'></i></td>
+              <table className='text-center w-full'>
+                <thead>
+                  <tr className='border-b-4'>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>PRICE</th>
+                    <th>CATEGORY</th>
+                    <th>SUBCATEGORY</th>
+                    <th>SEASON</th>
+                    <th>USAGE</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  { products.map((product) =>(
+                    <tr key={product._id} className='border-b-2 hover:bg-slate-200 cursor-pointer'>
+                      <td>{product._id}</td>
+                      <td>{product.productDisplayName}</td>
+                      <td>{product.price}€</td>
+                      <td>{product.masterCategory}</td>
+                      <td>{product.subCategory}</td>
+                      <td>{product.season}</td>
+                      <td>{product.usage}</td>
+                      <td className='hover:text-slate-400'>
+                        <Link to={`/admin/product/${product._id}/edit`}>
+                          <i className='fa-regular fa-pen-to-square p-2'></i>
+                        </Link>
+                      </td>
+                      <td className='hover:text-slate-400' onClick={() => deleteHandler(product._id)}><i className='fa-regular fa-trash-can p-2'></i></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
 

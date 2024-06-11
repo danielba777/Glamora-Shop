@@ -2,7 +2,7 @@ import React,{ useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useLogoutMutation } from '../../slices/usersApiSlice'
-import { useUpdateProductMutation, useGetProductDetailsQuery } from '../../slices/productsApiSlice'
+import { useUpdateProductMutation, useGetProductDetailsQuery, useUploadProductImageMutation } from '../../slices/productsApiSlice'
 import { logout } from '../../slices/authSlice'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
@@ -19,6 +19,7 @@ const ProductEditScreen = () => {
     const [year, setYear] = useState('')
     const [usage, setUsage] = useState('')
     const [productDisplayName, setProductDisplayName] = useState('')
+    const [image, setImage] = useState('')
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -29,6 +30,7 @@ const ProductEditScreen = () => {
 
     const { data: product, isLoading, refetch, error } = useGetProductDetailsQuery(productId)
     const [updateProduct,{ isLoading: loadingUpdate }] = useUpdateProductMutation()
+    const [uploadProductImage,{ isLoading: loadingUpload }] = useUploadProductImageMutation()
 
     /**/ console.log('Product Data: ', product)
 
@@ -36,6 +38,7 @@ const ProductEditScreen = () => {
         if (product) {
             setProductDisplayName(product.productDisplayName)
             setPrice(product.price)
+            setImage(product.image)
             setMasterCategory(product.masterCategory)
             setSubCategory(product.subCategory)
             setArticleType(product.articleType)
@@ -64,6 +67,7 @@ const ProductEditScreen = () => {
             await updateProduct({
                 _id: productId,
                 imageId: product.imageId,
+                image,
                 productDisplayName,
                 price, 
                 masterCategory,
@@ -84,6 +88,21 @@ const ProductEditScreen = () => {
             console.log(err?.data?.message || err.error)
         }
     }
+
+    const uploadFileHandler = async (e) => {
+
+      const formData = new FormData();
+      formData.append('image', e.target.files[0]);
+
+      try {
+        const res = await uploadProductImage(formData).unwrap();
+        console.log(res.message)
+        setImage(res.image);
+
+      } catch (err) {
+        console.log(err?.data?.message || err.error);
+      }
+    };
   
   return (
     <>
@@ -141,107 +160,118 @@ const ProductEditScreen = () => {
             <h2 className='text-xl font-semibold my-4'>Edit Product</h2>
           
             { isLoading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
-                <div className='flex flex-col sm:w-1/2 border rounded-md shadow-md p-2'>
-            <form onSubmit={submitHandler} className='flex flex-col gap-4 p-4'>
-              <div className='flex flex-col w-full'>
-                <label htmlFor='productDisplayName' className='text-left pl-1'>Name</label>
-                <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
-                    id='productDisplayName'
-                    value={productDisplayName}
-                    type='text'
-                    placeholder='Name'
-                    onChange={(e) => setProductDisplayName(e.target.value)} />
-              </div>
-              <div className='flex flex-col w-full'>
-                <label htmlFor='price' className='text-left pl-1'>Price [€]</label>
-                <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
-                    id='price'
-                    value={price}
-                    type='number'
-                    placeholder='Price'
-                    onChange={(e) => setPrice(e.target.value)} />
-              </div>
-              <div className='flex flex-col w-full'>
-                <label htmlFor='masterCategory' className='text-left pl-1'>Category</label>
-                <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
-                    id='masterCategory'
-                    value={masterCategory}
-                    type='text'
-                    placeholder='Category'
-                    onChange={(e) => setMasterCategory(e.target.value)} />
-              </div>
-              <div className='flex flex-col w-full'>
-                <label htmlFor='subCategory' className='text-left pl-1'>Subcategory</label>
-                <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
-                    id='subCategory'
-                    value={subCategory}
-                    type='text'
-                    placeholder='Subcategory'
-                    onChange={(e) => setSubCategory(e.target.value)} />
-              </div>
-              <div className='flex flex-col w-full'>
-                <label htmlFor='articleType' className='text-left pl-1'>Article Type</label>
-                <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
-                    id='articleType'
-                    value={articleType}
-                    type='text'
-                    placeholder='Article Type'
-                    onChange={(e) => setArticleType(e.target.value)} />
-              </div>
-              <div className='flex flex-col w-full'>
-                <label htmlFor='baseColour' className='text-left pl-1'>Base Colour</label>
-                <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
-                    id='baseColour'
-                    value={baseColour}
-                    type='text'
-                    placeholder='Base Colour'
-                    onChange={(e) => setBaseColour(e.target.value)} />
-              </div>
-              <div className='flex flex-col w-full'>
-                <label htmlFor='gender' className='text-left pl-1'>Gender</label>
-                <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
-                    id='gender'
-                    value={gender}
-                    type='text'
-                    placeholder='Gender'
-                    onChange={(e) => setGender(e.target.value)} />
-              </div>
-              <div className='flex flex-col w-full'>
-                <label htmlFor='season' className='text-left pl-1'>Season</label>
-                <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
-                    id='season'
-                    value={season}
-                    type='text'
-                    placeholder='Season'
-                    onChange={(e) => setSeason(e.target.value)} />
-              </div>
-              <div className='flex flex-col w-full'>
-                <label htmlFor='usage' className='text-left pl-1'>Usage</label>
-                <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
-                    id='usage'
-                    value={usage}
-                    type='text'
-                    placeholder='Usage'
-                    onChange={(e) => setUsage(e.target.value)} />
-              </div>
-              <div className='flex flex-col w-full'>
-                <label htmlFor='year' className='text-left pl-1'>Year</label>
-                <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
-                    id='year'
-                    value={year}
-                    type='text'
-                    placeholder='Year'
-                    onChange={(e) => setYear(e.target.value)} />
-              </div>
-              
-              <div className='flex justify-center pt-4'>
-                <button type='submit' className='bg-zinc-950 rounded-md text-white p-2 duration-300 hover:-translate-y-[2px] hover:shadow-md min-w-[200px]'>
-                  Update
-                </button>
-              </div>
+              <div className='flex flex-col sm:w-1/2 border rounded-md shadow-md p-2'>
+                <form onSubmit={submitHandler} className='flex flex-col gap-4 p-4'>
+                  <div className='flex flex-col w-full'>
+                    <label htmlFor='productDisplayName' className='text-left pl-1'>Name</label>
+                    <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
+                        id='productDisplayName'
+                        value={productDisplayName}
+                        type='text'
+                        placeholder='Name'
+                        onChange={(e) => setProductDisplayName(e.target.value)} />
+                  </div>
+                  <div className='flex flex-col w-full'>
+                    <label htmlFor='price' className='text-left pl-1'>Price [€]</label>
+                    <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
+                        id='price'
+                        value={price}
+                        type='number'
+                        placeholder='Price'
+                        onChange={(e) => setPrice(e.target.value)} />
+                  </div>
 
-            </form>
-          </div>
+                  <div>
+                      <label htmlFor='imageUpload' className='text-left pl-1'>Image</label>
+                      <input type='file'
+                        label='Choose file'
+                        id='imageUpload'
+                        className='border p-2 bg-slate-100 outline-none rounded-md w-full'
+                        onChange={uploadFileHandler} />
+                      {loadingUpload && <Loader />}
+                  </div>
+
+                  <div className='flex flex-col w-full'>
+                    <label htmlFor='masterCategory' className='text-left pl-1'>Category</label>
+                    <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
+                        id='masterCategory'
+                        value={masterCategory}
+                        type='text'
+                        placeholder='Category'
+                        onChange={(e) => setMasterCategory(e.target.value)} />
+                  </div>
+                  <div className='flex flex-col w-full'>
+                    <label htmlFor='subCategory' className='text-left pl-1'>Subcategory</label>
+                    <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
+                        id='subCategory'
+                        value={subCategory}
+                        type='text'
+                        placeholder='Subcategory'
+                        onChange={(e) => setSubCategory(e.target.value)} />
+                  </div>
+                  <div className='flex flex-col w-full'>
+                    <label htmlFor='articleType' className='text-left pl-1'>Article Type</label>
+                    <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
+                        id='articleType'
+                        value={articleType}
+                        type='text'
+                        placeholder='Article Type'
+                        onChange={(e) => setArticleType(e.target.value)} />
+                  </div>
+                  <div className='flex flex-col w-full'>
+                    <label htmlFor='baseColour' className='text-left pl-1'>Base Colour</label>
+                    <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
+                        id='baseColour'
+                        value={baseColour}
+                        type='text'
+                        placeholder='Base Colour'
+                        onChange={(e) => setBaseColour(e.target.value)} />
+                  </div>
+                  <div className='flex flex-col w-full'>
+                    <label htmlFor='gender' className='text-left pl-1'>Gender</label>
+                    <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
+                        id='gender'
+                        value={gender}
+                        type='text'
+                        placeholder='Gender'
+                        onChange={(e) => setGender(e.target.value)} />
+                  </div>
+                  <div className='flex flex-col w-full'>
+                    <label htmlFor='season' className='text-left pl-1'>Season</label>
+                    <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
+                        id='season'
+                        value={season}
+                        type='text'
+                        placeholder='Season'
+                        onChange={(e) => setSeason(e.target.value)} />
+                  </div>
+                  <div className='flex flex-col w-full'>
+                    <label htmlFor='usage' className='text-left pl-1'>Usage</label>
+                    <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
+                        id='usage'
+                        value={usage}
+                        type='text'
+                        placeholder='Usage'
+                        onChange={(e) => setUsage(e.target.value)} />
+                  </div>
+                  <div className='flex flex-col w-full'>
+                    <label htmlFor='year' className='text-left pl-1'>Year</label>
+                    <input className='border p-2 bg-slate-100 outline-none rounded-md w-full'
+                        id='year'
+                        value={year}
+                        type='text'
+                        placeholder='Year'
+                        onChange={(e) => setYear(e.target.value)} />
+                  </div>
+                  
+                  <div className='flex justify-center pt-4'>
+                    <button type='submit' className='bg-zinc-950 rounded-md text-white p-2 duration-300 hover:-translate-y-[2px] hover:shadow-md min-w-[200px]'>
+                      Update
+                    </button>
+                  </div>
+
+                </form>
+              </div>
             )}
 
             <div className='h-32 sm:h-64' />
