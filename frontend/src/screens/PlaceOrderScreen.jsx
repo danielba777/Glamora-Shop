@@ -157,6 +157,7 @@ const PlaceOrderScreen = () => {
                                         <h3 className='text-md font-semibold'>{item.productDisplayName}</h3>
                                         <p>{item.articleType}</p>
                                         <p>{item.baseColour}</p>
+                                        <p>{item.size}</p>
                                         <p>Quantity: {item.qty}</p>
                                     </div>
                                 </div>

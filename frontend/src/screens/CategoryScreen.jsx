@@ -4,13 +4,19 @@ import Product from '../components/Product'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Paginate from '../components/Paginate'
-import { useGetProductsQuery } from '../slices/productsApiSlice.js'
+import { useGetProductByGenderQuery } from '../slices/productsApiSlice.js'
 
-const HomeScreen = () => {
+const CategoryScreen = () => {
 
-  const { pageNumber, keyword } = useParams()
+  const { gender, pageNumber, keyword } = useParams()
 
-  const { data, isLoading, error } = useGetProductsQuery({ keyword, pageNumber })
+  console.log('gender: ', gender)
+  console.log('pageNumber: ', pageNumber)
+  console.log('keyword: ', keyword)
+
+  const { data, isLoading, error } = useGetProductByGenderQuery({ gender, pageNumber, keyword })
+
+  console.log(`Category Page Data for gender: ${gender} -> `, data)
 
   return (
 
@@ -22,10 +28,11 @@ const HomeScreen = () => {
       ) : (
           <div className='flex flex-col justify-between'>
             <div className='flex flex-col w-full px-4'>
-              <h1 className='text-2xl mb-4'>{ keyword ? `Your Search Results for: "${keyword}"` : 'Latest Products'}</h1>
+              <h1 className='text-2xl mb-4'>{ gender === 'women' ? 'Women' : 'Men' }</h1>
               <div className='grid grid-cols-2 sm:grid-cols-3 gap-4'>
                 {data?.products?.map((product) => (
                   <Product key={product.imageId} product={product} />
+                  
                 ))}
               </div>
               <div className='h-8 sm:h-64' />
@@ -37,4 +44,4 @@ const HomeScreen = () => {
   )
 }
 
-export default HomeScreen
+export default CategoryScreen

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import SearchBox from './SearchBox'
 
@@ -7,6 +7,8 @@ const Header = () => {
 
   const { cartItems } = useSelector((state) => state.cart)
   const { userInfo } = useSelector((state) => state.auth)
+
+  const { gender } = useParams()
 
   return (
     <header className='flex flex-col'>
@@ -100,25 +102,20 @@ const Header = () => {
         <button></button>
       </div>
 
-      <div className='flex justify-center sm:justify-between items-center sm:border-b-2 px-2 py-1 border-t-2 sm:border-t-0'>
-        <div className='flex gap-2 font-semibold text-lg'>
-          <Link>
-            <button className='flex justify-center items-center w-[100px] h-[50px]'>
+      <div className='flex justify-center sm:justify-between items-center sm:border-b-2 px-2 border-t-2 sm:border-t-0'>
+        <div className='flex gap-2 font-semibold text-lg h-full'>
+          <Link to='/category/women'>
+            <button className={'flex justify-center items-center w-[100px] py-4' + (gender === 'women' ? ' border-b-2 border-slate-600' : '')}>
               <h2>Women</h2>
             </button>
           </Link>
-          <Link>
-            <button className='flex justify-center items-center w-[100px] h-[50px]'>
+          <Link to='/category/men'>
+            <button className={'flex justify-center items-center w-[100px] py-4' + (gender === 'men' ? ' border-b-2 border-slate-600' : '')}>
               <h2>Men</h2>
             </button>
           </Link>
-          <Link>
-            <button className='flex justify-center items-center w-[100px] h-[50px]'>
-              <h2>Kids</h2>
-            </button>
-          </Link>  
         </div>
-        <div className='hidden sm:flex sm:items-center sm:justify-center'>
+        <div className='hidden my-2 sm:flex sm:items-center sm:justify-center'>
           <SearchBox  />
         </div>
       </div>

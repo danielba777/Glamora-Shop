@@ -6,7 +6,7 @@ import Product from '../models/productModel.js'
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
 
-    const pageSize = 6
+    const pageSize = 2
     
     const page = Number(req.query.pageNumber) || 1
   
@@ -31,6 +31,7 @@ const getProducts = asyncHandler(async (req, res) => {
 // @route   GET /api/products/:id
 // @access  Public
 const getProductById = asyncHandler( async (req, res) => {
+
     const product = await Product.findById(req.params.id)
 
     if(product){
@@ -38,6 +39,39 @@ const getProductById = asyncHandler( async (req, res) => {
     }
 
     res.status(404).json({ message: 'Product not found' })
+})
+
+const getProductByCategory = asyncHandler( async (req, res) => {
+
+    const pageSize = 2
+    
+    const page = Number(req.query.pageNumber) || 1
+
+    let gender = req.params.gender
+
+    const keyword = req.query.keyword
+    ? {
+        productDisplayName: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {}
+
+    if( gender == 'women' ) gender = "Women"
+    else if( gender == 'men' ) gender = "Men"
+
+    const products = await Product.find({ 'gender': gender }).find({ ...keyword })
+        .limit(pageSize)
+        .skip(pageSize * (page - 1))
+
+    const count = await Product.find({ 'gender': gender}).countDocuments({ ...keyword })
+
+    if (products) {
+        return res.json({ products, page, pages: Math.ceil(count / pageSize) })
+    }
+
+    res.status(404).json({ message: 'Products not found'})
 })
 
 // @desc    Create a product
@@ -128,7 +162,8 @@ const deleteProduct = asyncHandler( async (req, res) => {
 
 export { 
     getProducts, 
-    getProductById, 
+    getProductById,
+    getProductByCategory,
     createProduct, 
     updateProduct, 
     deleteProduct 

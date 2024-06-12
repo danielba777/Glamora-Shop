@@ -10,6 +10,7 @@ const ProductScreen = () => {
 
     const [isLiked, setIsLiked] = useState(false)
     const [qty, setQty] = useState(1)
+    const [size, setSize] = useState('')
 
     const { id: productId } = useParams()
 
@@ -19,8 +20,13 @@ const ProductScreen = () => {
     const { data: product, isLoading, error } = useGetProductDetailsQuery(productId)
 
     const addToCartHandler = () => {
-      dispatch(addToCart({ ...product, qty }))
-      navigate('/cart')
+
+      if(size === ''){
+        alert('Select a size first.')
+      } else {
+        dispatch(addToCart({ ...product, qty, size }))
+        navigate('/cart')
+      }
     }
 
   return (
@@ -49,8 +55,8 @@ const ProductScreen = () => {
                 <fieldset aria-label='Choose a size'>
                   <div className='grid grid-cols-4 gap-4'>
                     {['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'].map(size => (
-                      <label key={size} className='relative flex items-center justify-center rounded-md border px-4 py-3 text-sm hover:bg-gray-50 cursor-pointer text-center'>
-                        <input className='sr-only peer' type='radio' name='size-choice' value={size} />
+                      <label key={size} value={size} className='relative flex items-center justify-center rounded-md border px-4 py-3 text-sm hover:bg-gray-50 cursor-pointer text-center'>
+                        <input className='sr-only peer' type='radio' name='size-choice' value={size} onChange={(e) => setSize(size)} />
                         <span className="absolute inset-0 rounded-md border-2 border-transparent peer-checked:border-blue-500">{size}</span>
                       </label>
                     ))}

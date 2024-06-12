@@ -30,6 +30,8 @@ import ProductListScreen from './screens/admin/ProductListScreen.jsx'
 import ProductEditScreen from './screens/admin/ProductEditScreen.jsx'
 import UserListScreen from './screens/admin/UserListScreen.jsx'
 import UserEditScreen from './screens/admin/UserEditScreen.jsx'
+import CategoryScreen from './screens/CategoryScreen.jsx'
+import WishlistScreen from './screens/WishlistScreen.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +44,10 @@ const router = createBrowserRouter(
       <Route path='/cart' element={<CartScreen />} />
       <Route path='/login' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
+      <Route path='/category/:gender' element={<CategoryScreen />} />
+      <Route path='/category/:gender/page/:pageNumber' element={<CategoryScreen />} />
+      <Route path='/category/:gender/search/:keyword' element={<CategoryScreen />} />
+      <Route path='/category/:gender/search/:keyword/page/:pageNumber' element={<CategoryScreen />} />
 
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
@@ -50,6 +56,7 @@ const router = createBrowserRouter(
         <Route path='/payment' element={<PaymentScreen />} />
         <Route path='/placeorder' element={<PlaceOrderScreen />} />
         <Route path='/order/:id' element={<OrderScreen />} />
+        <Route path='/wishlist' element={<WishlistScreen />} />
       </Route>
 
       <Route path='' element={<AdminRoute/>}>

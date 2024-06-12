@@ -53,6 +53,7 @@ const CartScreen = () => {
                                     <h3 className='text-md font-semibold'>{item.productDisplayName}</h3>
                                     <p>{item.articleType}</p>
                                     <p>{item.baseColour}</p>
+                                    <p>{item.size}</p>
                                 </div>
                                 <div className='flex justify-between w-max min-w-[110px] gap-6 border rounded-md px-2'>
                                     <button className='hover:text-slate-400' onClick={() => adjustQtyHandler(item._id, '--')}><i className='fa-solid fa-minus'></i></button>

@@ -17,6 +17,13 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             }),
             keepUnusedDataFor: 5,
         }),
+        getProductByGender: builder.query ({
+            query: ({ gender, keyword, pageNumber }) => ({
+                url: `${PRODUCTS_URL}/category/${gender}`,
+                params: { gender, keyword, pageNumber },
+            }),
+            keepUnusedDataFor: 5,
+        }),
         createProduct: builder.mutation({
             query: () => ({
                 url: `${PRODUCTS_URL}`,
@@ -50,7 +57,8 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 
 export const { 
     useGetProductsQuery, 
-    useGetProductDetailsQuery, 
+    useGetProductDetailsQuery,
+    useGetProductByGenderQuery,
     useCreateProductMutation,
     useUpdateProductMutation,
     useUploadProductImageMutation,

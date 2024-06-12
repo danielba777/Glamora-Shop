@@ -26,19 +26,6 @@ const products = [
       productDisplayName: "Peter England Men Party Blue Jeans"
     },
     {
-      imageId: 59263,
-      price: 129.99,
-      gender: "Women",
-      masterCategory: "Accessories",
-      subCategory: "Watches",
-      articleType: "Watches",
-      baseColour: "Silver",
-      season: "Winter",
-      year: 2016,
-      usage: "Casual",
-      productDisplayName: "Titan Women Silver Watch"
-    },
-    {
       imageId: 21379,
       price: 39.99,
       gender: "Men",

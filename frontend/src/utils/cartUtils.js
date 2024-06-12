@@ -16,7 +16,7 @@ export const updateCart = (state) => {
     console.log("taxPrice: ", taxPrice)
 
     // Calculate the shipping price 
-    const shippingPrice = (itemsPrice + taxPrice) > 100 ? 0 : 10;
+    const shippingPrice = (itemsPrice + taxPrice) > 100 ? 0 : 4.99;
     state.shippingPrice = addDecimals(shippingPrice);
 
     // Calculate the total price

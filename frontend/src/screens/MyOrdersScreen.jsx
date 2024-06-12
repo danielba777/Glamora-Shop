@@ -58,26 +58,6 @@ const MyOrdersScreen = () => {
                         </div>
                     </div>
                 </button>
-                <button className='p-2 rounded-md w-32 hover:border-slate-400 w-full sm:w-[220px] sm:h-[50px] sm:border sm:border-2 sm:border-slate-600'>
-                    <div className='flex items-center gap-2'>
-                        <div className='flex justify-center items-center w-max sm:w-[50px] text-xl sm:text-base'>
-                            <i className='fa-solid fa-gear'></i>
-                        </div>
-                            <div className='flex items-center justify-start text-xl sm:text-base'>
-                        <p>Settings</p>
-                        </div>
-                    </div>
-                </button>
-                <button className='p-2 rounded-md w-32 hover:border-slate-400 w-full sm:w-[220px] sm:h-[50px] sm:border sm:border-2 sm:border-slate-600'>
-                    <div className='flex items-center gap-2'>
-                        <div className='flex justify-center items-center w-max sm:w-[50px] text-xl sm:text-base'>
-                            <i className='fa-solid fa-comments'></i>
-                        </div>
-                            <div className='flex items-center justify-start text-xl sm:text-base'>
-                        <p>Help</p>
-                        </div>
-                    </div>
-                </button>
                 <div className='hidden sm:flex items-center justify-center mt-4 sm:justify-start'>
                     <button className='border border-2 border-slate-600 px-2 py-1 rounded-md w-32 hover:border-slate-400 min-w-[220px]' onClick={logoutHandler}>Logout</button>
                 </div>
