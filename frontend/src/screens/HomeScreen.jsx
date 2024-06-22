@@ -5,6 +5,7 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Paginate from '../components/Paginate'
 import { useGetProductsQuery } from '../slices/productsApiSlice.js'
+import Meta from '../components/Meta'
 
 const HomeScreen = () => {
 
@@ -22,6 +23,7 @@ const HomeScreen = () => {
       ) : (
           <div className='flex flex-col justify-between'>
             <div className='flex flex-col w-full px-4'>
+              <Meta />
               <h1 className='text-2xl mb-4'>{ keyword ? `Your Search Results for: "${keyword}"` : 'Latest Products'}</h1>
               <div className='grid grid-cols-2 sm:grid-cols-3 gap-4'>
                 {data?.products?.map((product) => (

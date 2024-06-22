@@ -5,11 +5,14 @@ import { useGetProductDetailsQuery } from '../slices/productsApiSlice.js'
 import { addToCart } from '../slices/cartSlice.js'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import Meta from '../components/Meta'
+import { toast } from 'react-toastify'
 
 const ProductScreen = () => {
+    
+    const qty = 1
 
     const [isLiked, setIsLiked] = useState(false)
-    const [qty, setQty] = useState(1)
     const [size, setSize] = useState('')
 
     const { id: productId } = useParams()
@@ -22,7 +25,7 @@ const ProductScreen = () => {
     const addToCartHandler = () => {
 
       if(size === ''){
-        alert('Select a size first.')
+        toast.error('Select a size first.')
       } else {
         dispatch(addToCart({ ...product, qty, size }))
         navigate('/cart')
@@ -37,6 +40,7 @@ const ProductScreen = () => {
         <Message variant='danger'>{ error?.data?.message || error.error }</Message>
       ) : (
         <div className='flex flex-col'>
+          <Meta title={product.productDisplayName} />
           <Link className='p-2' to='/'><i className='fa-solid fa-chevron-left'></i></Link>
           <div className='flex flex-col sm:flex-row'>
             <div className='p-4 sm:w-2/3 flex justify-center'>
