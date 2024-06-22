@@ -8,6 +8,7 @@ import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 const port = process.env.PORT
 
@@ -35,5 +36,8 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 app.get('/', (req, res) => {
     res.send('API is runnning...')
 })
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(port, () => console.log(`Server running on port: ${port}`))

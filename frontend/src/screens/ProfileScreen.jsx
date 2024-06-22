@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLogoutMutation } from '../slices/usersApiSlice'
 import { logout } from '../slices/authSlice'
-import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { useProfileMutation } from '../slices/usersApiSlice'
 import { setCredentials } from '../slices/authSlice'
+import { toast } from 'react-toastify';
 
 const ProfileScreen = () => {
 
@@ -39,9 +39,9 @@ const ProfileScreen = () => {
       try {
         const res = await updateProfile({ _id: userInfo._id, name, email, password }).unwrap()
         dispatch(setCredentials({ ...res }))
-        alert('Profile updated successfully!')
+        toast.success('Profile updated successfully');
       } catch (err) {
-        alert(err?.data?.message || err.err)
+        toast.error(err?.data?.message || err.error);
       }
     }
   }

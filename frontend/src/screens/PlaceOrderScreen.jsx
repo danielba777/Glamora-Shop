@@ -13,10 +13,8 @@ const PlaceOrderScreen = () => {
     const dispatch = useDispatch()
 
     const cart = useSelector((state) => state.cart)
-    const auth = useSelector((state) => state.auth)
 
     const { cartItems, shippingAddress } = cart
-    const { userInfo } = auth
 
     const [createOrder,{ isLoading, error }] = useCreateOrderMutation()
 

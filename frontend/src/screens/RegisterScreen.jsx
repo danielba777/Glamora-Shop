@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useRegisterMutation } from '../slices/usersApiSlice'
 import { setCredentials } from '../slices/authSlice'
 import Loader from '../components/Loader'
-import Message from '../components/Message'
+import { toast } from 'react-toastify'
 
 const RegisterScreen = () => {
 
@@ -17,7 +17,7 @@ const RegisterScreen = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [register, { isLoading, error }] = useRegisterMutation()
+    const [register, { isLoading }] = useRegisterMutation()
 
     const { userInfo } = useSelector((state) => state.auth)
 
@@ -44,7 +44,7 @@ const RegisterScreen = () => {
             dispatch(setCredentials({...res }))
             navigate(redirect)
         } catch (err) {
-            console.log(err?.data.message || err?.error)
+            toast.error(err?.data?.message || err.error);
         }
     }
 
@@ -90,8 +90,6 @@ const RegisterScreen = () => {
                             placeholder='Password' 
                             onChange={(e) => setPassword(e.target.value)} />
                     </div>
-
-                    { error && <Message variant='danger'>{error?.data?.message || error?.error}</Message>}
 
                     <div className='flex justify-center p-4'>
                         <button className='bg-zinc-950 rounded-md text-white p-2 duration-300 hover:-translate-y-[2px] hover:shadow-md min-w-[200px]' 

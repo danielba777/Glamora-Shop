@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import { Outlet, useLocation } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => {
 
   const ScrollToTop = () => {
-    // Extracts pathname property(key) from an object
     const { pathname } = useLocation();
   
-    // Automatically scrolls to top whenever pathname changes
     useEffect(() => {
       window.scrollTo(0, 0);
     }, [pathname]);
@@ -24,6 +24,7 @@ const App = () => {
             <Outlet />
             <ScrollToTop />
           </div>
+          <ToastContainer />
         </main>
       </div>
       <Footer />

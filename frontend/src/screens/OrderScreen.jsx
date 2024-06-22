@@ -6,6 +6,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPayPalClientIdQuery, useDeliverOrderMutation } from '../slices/ordersApiSlice'
 import { addDecimals } from '../utils/cartUtils'
+import { toast } from 'react-toastify'
 
 const OrderScreen = () => {
 
@@ -44,13 +45,13 @@ const OrderScreen = () => {
                 await payOrder({ orderId, details })
                 refetch()
             } catch (err) {
-                console.log(err?.data?.message || err.message)
+                toast.error(err?.data?.message || err.error)
             }
         })
     }
 
     function onError(err) {
-        console.log(err.message)
+        toast.error(err.message);
     }
 
     function createOrder(data, actions) {
