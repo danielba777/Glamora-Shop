@@ -19,13 +19,6 @@ const Header = () => {
           </Link>
         </div>
         <div className='flex gap-2 sm:gap-4'>
-          <Link to='/wishlist'>
-            <button className='text-xl hover:text-zinc-600 cursor-pointer'>
-              <div className='relative h-[30px] w-[30px]'>
-                <i className='fa-solid fa-heart'></i>
-              </div>
-            </button>
-          </Link>
           { userInfo ? (
             
             userInfo.isAdmin ? (
