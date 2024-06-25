@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useLogoutMutation } from '../../slices/usersApiSlice'
-import { useGetProductsQuery, useCreateProductMutation, useDeleteProductMutation } from '../../slices/productsApiSlice'
+import { useCreateProductMutation, useDeleteProductMutation, useGetAllProductsQuery } from '../../slices/productsApiSlice'
 import { logout } from '../../slices/authSlice'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
@@ -13,7 +13,7 @@ const ProductListScreen = () => {
   const navigate = useNavigate()
 
   const [logoutApiCall] = useLogoutMutation()
-  const { data: products, isLoading, error, refetch } = useGetProductsQuery({ keyword: 'search term', pageNumber: 1 });
+  const { data: products, isLoading, error, refetch } = useGetAllProductsQuery();
   const [createProduct,{ isLoading: loadingCreate }] = useCreateProductMutation()
   const [deleteProduct,{ isLoading: loadingDelete }] = useDeleteProductMutation()
 
