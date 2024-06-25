@@ -31,6 +31,14 @@ admin@email.com
 Password: 123456
 ```
 
+## Test PayPal Account
+
+```
+# Use this account to checkout
+sb-9lgq531070083@personal.example.com
+Password: )>TVtl2L
+```
+
 ## Usage
 
 * Create a MongoDB database and obtain your **MONGO_URI** 
