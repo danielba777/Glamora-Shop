@@ -25,7 +25,7 @@ const ProductListScreen = () => {
       dispatch(logout())
       navigate('/login')
     } catch (err) {
-      console.log(err)
+      console.log(err?.data?.message || err.error)
     } 
   }
 
