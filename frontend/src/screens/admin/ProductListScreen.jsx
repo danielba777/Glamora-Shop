@@ -17,6 +17,8 @@ const ProductListScreen = () => {
   const [createProduct,{ isLoading: loadingCreate }] = useCreateProductMutation()
   const [deleteProduct,{ isLoading: loadingDelete }] = useDeleteProductMutation()
 
+  console.log("Products data: ", products)
+
   const logoutHandler = async () => {
     try{
       await logoutApiCall().unwrap()
@@ -50,7 +52,7 @@ const ProductListScreen = () => {
   }
 
   if (isLoading) return <Loader />
-  if (error) return <Message variant='danger'>{error}</Message>
+  //if (error) return <Message variant='danger'>{error}</Message>
 
   return (
     <>
