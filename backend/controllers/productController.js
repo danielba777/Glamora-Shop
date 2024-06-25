@@ -27,6 +27,21 @@ const getProducts = asyncHandler(async (req, res) => {
     res.json({ products, page, pages: Math.ceil(count / pageSize) })
 })
 
+// @desc    Fetch all products without keyword
+// @route   GET /api/products/all
+// @access  Public
+const getAllProducts = asyncHandler(async (req, res) => {
+    const pageSize = 6;
+    const page = Number(req.query.pageNumber) || 1;
+
+    const count = await Product.countDocuments({});
+    const products = await Product.find({})
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+
+    res.json({ products, page, pages: Math.ceil(count / pageSize) });
+});
+
 // @desc    Fetch a product
 // @route   GET /api/products/:id
 // @access  Public
@@ -161,7 +176,8 @@ const deleteProduct = asyncHandler( async (req, res) => {
 })
 
 export { 
-    getProducts, 
+    getProducts,
+    getAllProducts,
     getProductById,
     getProductByCategory,
     createProduct, 
