@@ -4,7 +4,7 @@ import { apiSlice } from './apiSlice.js'
 export const productsApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getProducts: builder.query({
-            query: ({ keyword = '', pageNumber = 1 } = {}) => ({
+            query: ({ keyword = 'search term', pageNumber = 1 } = {}) => ({
               url: PRODUCTS_URL,
               params: { keyword, pageNumber },
             }),

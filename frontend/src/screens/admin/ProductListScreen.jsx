@@ -13,7 +13,7 @@ const ProductListScreen = () => {
   const navigate = useNavigate()
 
   const [logoutApiCall] = useLogoutMutation()
-  const { data: products, isLoading, error, refetch } = useGetProductsQuery({ keyword: '', pageNumber: 1 });
+  const { data: products, isLoading, error, refetch } = useGetProductsQuery({ keyword: 'search term', pageNumber: 1 });
   const [createProduct,{ isLoading: loadingCreate }] = useCreateProductMutation()
   const [deleteProduct,{ isLoading: loadingDelete }] = useDeleteProductMutation()
 
