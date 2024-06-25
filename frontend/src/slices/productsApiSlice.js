@@ -4,7 +4,7 @@ import { apiSlice } from './apiSlice.js'
 export const productsApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getProducts: builder.query({
-            query: ({ keyword, pageNumber }) => ({
+            query: ({ keyword = '', pageNumber = 1 } = {}) => ({
               url: PRODUCTS_URL,
               params: { keyword, pageNumber },
             }),
@@ -17,10 +17,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             }),
             keepUnusedDataFor: 5,
         }),
-        getProductByGender: builder.query ({
-            query: ({ gender, keyword, pageNumber }) => ({
+        getProductByGender: builder.query({
+            query: ({ gender, keyword = '', pageNumber = 1 }) => ({
                 url: `${PRODUCTS_URL}/category/${gender}`,
-                params: { gender, keyword, pageNumber },
+                params: { keyword, pageNumber },
             }),
             keepUnusedDataFor: 5,
         }),

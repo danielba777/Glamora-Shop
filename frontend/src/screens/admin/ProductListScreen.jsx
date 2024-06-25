@@ -13,11 +13,9 @@ const ProductListScreen = () => {
   const navigate = useNavigate()
 
   const [logoutApiCall] = useLogoutMutation()
-  const { data: products, isLoading, error, refetch } = useGetProductsQuery()
+  const { data: products, isLoading, error, refetch } = useGetProductsQuery({ keyword: '', pageNumber: 1 });
   const [createProduct,{ isLoading: loadingCreate }] = useCreateProductMutation()
   const [deleteProduct,{ isLoading: loadingDelete }] = useDeleteProductMutation()
-
-  console.log('Orders Data: ', products)
 
   const logoutHandler = async () => {
     try{
@@ -51,7 +49,6 @@ const ProductListScreen = () => {
     }
   }
 
-  // Überprüfen, ob die Daten korrekt geladen wurden
   if (isLoading) return <Loader />
   if (error) return <Message variant='danger'>{error}</Message>
 
@@ -117,42 +114,42 @@ const ProductListScreen = () => {
           
           { products ? (
             <div className='overflow-x-auto'>
-              <table className='text-center w-full'>
-                <thead>
-                  <tr className='border-b-4'>
-                    <th>ID</th>
-                    <th>NAME</th>
-                    <th>PRICE</th>
-                    <th>CATEGORY</th>
-                    <th>SUBCATEGORY</th>
-                    <th>SEASON</th>
-                    <th>USAGE</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {products.map((product) => (
-                    <tr key={product._id} className='border-b-2 hover:bg-slate-200 cursor-pointer'>
-                      <td>{product._id}</td>
-                      <td>{product.productDisplayName}</td>
-                      <td>{product.price}€</td>
-                      <td>{product.masterCategory}</td>
-                      <td>{product.subCategory}</td>
-                      <td>{product.season}</td>
-                      <td>{product.usage}</td>
-                      <td className='hover:text-slate-400'>
-                        <Link to={`/admin/product/${product._id}/edit`}>
-                          <i className='fa-regular fa-pen-to-square p-2'></i>
-                        </Link>
-                      </td>
-                      <td className='hover:text-slate-400' onClick={() => deleteHandler(product._id)}><i className='fa-regular fa-trash-can p-2'></i></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                <table className='text-center w-full'>
+                    <thead>
+                        <tr className='border-b-4'>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>PRICE</th>
+                            <th>CATEGORY</th>
+                            <th>SUBCATEGORY</th>
+                            <th>SEASON</th>
+                            <th>USAGE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {products.map((product) => (
+                            <tr key={product._id} className='border-b-2 hover:bg-slate-200 cursor-pointer'>
+                                <td>{product._id}</td>
+                                <td>{product.productDisplayName}</td>
+                                <td>{product.price}€</td>
+                                <td>{product.masterCategory}</td>
+                                <td>{product.subCategory}</td>
+                                <td>{product.season}</td>
+                                <td>{product.usage}</td>
+                                <td className='hover:text-slate-400'>
+                                    <Link to={`/admin/product/${product._id}/edit`}>
+                                        <i className='fa-regular fa-pen-to-square p-2'></i>
+                                    </Link>
+                                </td>
+                                <td className='hover:text-slate-400' onClick={() => deleteHandler(product._id)}><i className='fa-regular fa-trash-can p-2'></i></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
-          ) : (
+        ) : (
             <Message variant='danger'>No Products Found</Message>
-          )}
+        )}
 
           <div className='h-32 sm:h-64' />
         </div>
