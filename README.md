@@ -1,7 +1,7 @@
 # Glamora E-Commerce Fashion Store
 > Full-featured e-commerce platform built with the MERN stack & Redux.
 
-![Screenshot collection of the Glamora E-Commerce Fashion Store](https://i.postimg.cc/85bYP8dJ/Glamora-Preview.png)
+![Screenshot collection of the Glamora Fashion Store](https://i.postimg.cc/85bYP8dJ/Glamora-Preview.png)
 
 This is an e-commerce platform built with the MERN stack (MongoDB, Express, React, Node.js) and Redux for state management. The platform includes features such as product browsing, user authentication, product management for admins, and order management.
 
